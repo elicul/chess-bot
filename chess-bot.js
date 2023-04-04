@@ -20,13 +20,13 @@
 "use strict";
 
 function main() {
-    var stockFishObjectURL;
-    var lastValue = 10;
+    let stockFishObjectURL;
+    let lastValue = 10;
     const engine = document.engine = {};
     const chessBotVariables = document.chessBotVariables = {};
     chessBotVariables.autoMovePiece = false;
     chessBotVariables.autoRun = true;
-    chessBotVariables.delay = 0.1;
+    chessBotVariables.delay = 0.5;
     const chessBotFunctions = document.chessBotFunctions = {};
 
     stop_b = stop_w = 0;
@@ -405,13 +405,13 @@ function main() {
 
             var div = document.createElement('div')
             var content = `<div style="margin: 0 0 0 8px;"><br><input type="checkbox" id="autoRun" name="autoRun" value="true">
-<label for="autoRun"> Enable auto run</label><br>
-<input type="checkbox" id="autoMove" name="autoMove" value="false">
-<label for="autoMove"> Enable auto move</label><br>
-<input type="number" id="timeDelay" name="timeDelay" min="0.1" value=0.1>
-<label for="timeDelay">Auto Run Delay (Seconds)</label></div>`
+                <label for="autoRun"> Enable auto run</label><br>
+                <input type="checkbox" id="autoMove" name="autoMove" value="false">
+                <label for="autoMove"> Enable auto move</label><br>
+                <input type="number" id="timeDelay" name="timeDelay" min="0.1" value=0.5>
+                <label for="timeDelay">Auto Run Delay (Seconds)</label></div>`
             div.innerHTML = content;
-            div.setAttribute('style', 'background-color:#312e2b; height:auto;');
+            div.setAttribute('style', 'background-color:#312e2b; height:auto; color:white; display: grid; grid-template-columns: 1fr 1fr; align-items: end; justify-items: center;');
             div.setAttribute('id', 'settingsContainer');
 
             $('chess-board')[0].parentElement.parentElement.appendChild(div);
@@ -425,10 +425,11 @@ function main() {
             }
             #relEngBut {
             position: relative;
-			color: #ffef85;
+			color: white;
 			background-color: #3cba2c;
 			font-size: 19px;
 			border: 1px solid #000000;
+            font-weight: bold;
 			padding: 15px 50px;
             letter-spacing: 1px;
 			cursor: pointer
@@ -473,6 +474,9 @@ function main() {
 
     const waitForChessBoard = setInterval(() => {
         if (loaded) {
+            if(!$('#autoRun')[0].checked && chessBotVariables.autoRun)
+                $("#autoRun")[0].setAttribute("checked", true)
+
             chessBotVariables.autoRun = $('#autoRun')[0].checked;
             chessBotVariables.autoMove = $('#autoMove')[0].checked;
             chessBotVariables.delay = $('#timeDelay')[0].value;
@@ -490,7 +494,7 @@ function main() {
             var currentDelay = chessBotVariables.delay != undefined ? chessBotVariables.delay * 1000 : 10;
             other(currentDelay);
         }
-    }, 500);
+    }, 100);
 }
 
 var isThinking = false
